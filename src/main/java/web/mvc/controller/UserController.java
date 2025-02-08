@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +23,16 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/user")
-    public String signUp(@RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest) {
         log.info("회원가입 진행합니다.");
         User user = modelMapper.map(signUpRequest, User.class);
         log.info("사용자 정보 : id: {} / nickname : {}", user.getUserId(), user.getNickname());
         String result = userService.signUp(user);
-        return result + "님 가입 성공!";
+        if(result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
     }
 
     // 로그인
