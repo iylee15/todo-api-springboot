@@ -31,4 +31,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Todo>todoList;
+
+    public User(long userSeq) {
+        this.userSeq = userSeq;
+    }
 }

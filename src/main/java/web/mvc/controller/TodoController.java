@@ -5,11 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import web.mvc.domain.Todo;
+import web.mvc.domain.User;
 import web.mvc.dto.TodoDto;
 import web.mvc.dto.TodoRequestDto;
 import web.mvc.service.TodoService;
@@ -19,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/todo")
 public class TodoController {
 
     private final TodoService todoService;
@@ -31,7 +30,7 @@ public class TodoController {
     }
 
     // todo 조회
-    @GetMapping("/todoList")
+    @GetMapping
     public ResponseEntity<?> getTodoListById(long userSeq){
         log.info("Todo List 조회");
         List<Todo> todoList = todoService.findTodoById(userSeq);
@@ -40,10 +39,11 @@ public class TodoController {
     }
 
     // todo 등록
-    @PostMapping("/todo")
+    @PostMapping
     public ResponseEntity<?> insertTodo (@RequestBody TodoDto todoDto){
         log.info("Todo 등록");
         Todo todo = modelMapper.map(todoDto, Todo.class);
+        todo.setStatus(0);
         int result = todoService.insertTodo(todo);
         if (result == 1) {
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -53,8 +53,19 @@ public class TodoController {
     }
 
     // todo 수정
+    @PutMapping
+    public ResponseEntity<?> updateTodo(@RequestBody TodoDto todoDto){
+        log.info("Todo 수정");
+        Todo todo = modelMapper.map(todoDto, Todo.class);
+        todo.setUser(new User(todoDto.getUserSeq()));
+        log.info("Todo 수정정보 : {}", todo.toString());
+        Todo result = todoService.updateTodo(todo);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     // todo 삭제
+
+    // todo 체크
 
 
 }

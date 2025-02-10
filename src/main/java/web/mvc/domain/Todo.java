@@ -38,4 +38,9 @@ public class Todo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_seq", nullable = false)
     private User user;
+
+    @Override
+    public String toString() {
+        return "Todo 정보 : " + this.getTodoSeq() + " | " + this.getTitle();
+    }
 }

@@ -1,6 +1,7 @@
 package web.mvc.service;
 
 import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,16 @@ public class TodoServiceImpl implements TodoService {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    @Override
+    public Todo updateTodo(Todo todo) {
+        Todo dbTodo = todoRepository.findById(todo.getTodoSeq()).orElseThrow(() -> new RuntimeException("등록된 정보가 없습니다."));
+        dbTodo.setTitle(todo.getTitle());
+        dbTodo.setDescription(todo.getDescription());
+        dbTodo.setPriority(todo.getPriority());
+        dbTodo.setDate(todo.getDate());
+        dbTodo.setUser(todo.getUser());
+        return dbTodo;
     }
 }

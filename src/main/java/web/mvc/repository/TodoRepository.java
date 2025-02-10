@@ -11,6 +11,9 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     @Query("select t from Todo t where t.user.userSeq = ?1")
     List<Todo> findTodoByUser(long userSeq);
 
+//    @Query("select t from Todo t where t.todoSeq = ?1")
+//    Todo findById(long todoSeq);
+
     // Todo 등록
 
 }

@@ -35,7 +35,7 @@ public class SecurityConfig {
 
         // 권한 허용 설정
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/user", "/login").permitAll()
+                .requestMatchers("/user", "/login","/todo").permitAll()
                 .anyRequest().authenticated()
         );
 
