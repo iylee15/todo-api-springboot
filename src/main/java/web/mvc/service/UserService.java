@@ -1,5 +1,6 @@
 package web.mvc.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import web.mvc.domain.User;
 import web.mvc.dto.SignUpRequest;
 
@@ -9,5 +10,6 @@ public interface UserService {
     public String signUp(User user);
 
     // 로그인
+    public String login(String userId, String password);
 
 }
