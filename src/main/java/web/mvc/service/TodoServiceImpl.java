@@ -44,4 +44,16 @@ public class TodoServiceImpl implements TodoService {
         dbTodo.setUser(todo.getUser());
         return dbTodo;
     }
+
+    @Override
+    public int deleteTodo(long todoSeq) {
+        todoRepository.deleteById(todoSeq);
+        return 1;
+    }
+
+    @Override
+    public void toggleTodo(long todoSeq) {
+        Todo todo = todoRepository.findById(todoSeq).orElseThrow(() -> new RuntimeException("등록된 항목이 없습니다."));
+        todo.setStatus(!todo.isStatus());
+    }
 }

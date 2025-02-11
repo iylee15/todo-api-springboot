@@ -35,7 +35,9 @@ public class SecurityConfig {
 
         // 권한 허용 설정
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/user", "/login","/todo").permitAll()
+                .requestMatchers("/user", "/login","/todo", "/todo/**").permitAll()
+                .requestMatchers("/swagger-ui", "/swagger-ui/**",
+                        "/api/logistics","/api/swagger-config","/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
         );
 

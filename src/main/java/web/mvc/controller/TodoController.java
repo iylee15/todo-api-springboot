@@ -1,5 +1,7 @@
 package web.mvc.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "TodoController API", description = "Swagger 테스트용 API")
 @RequestMapping("/todo")
 public class TodoController {
 
@@ -24,12 +27,13 @@ public class TodoController {
     private final ModelMapper modelMapper;
 
     // test
-    @GetMapping("/hello")
-    public String test() {
-        return "Hello World";
-    }
+//    @GetMapping("/hello")
+//    public String test() {
+//        return "Hello World";
+//    }
 
     // todo 조회
+    @Operation(summary = "Todo List 조회", description = "사용자가 등록한 Todo List의 조회")
     @GetMapping
     public ResponseEntity<?> getTodoListById(long userSeq){
         log.info("Todo List 조회");
@@ -39,11 +43,12 @@ public class TodoController {
     }
 
     // todo 등록
+    @Operation(summary = "Todo 등록", description = "사용자의 할 일 등록")
     @PostMapping
     public ResponseEntity<?> insertTodo (@RequestBody TodoDto todoDto){
         log.info("Todo 등록");
         Todo todo = modelMapper.map(todoDto, Todo.class);
-        todo.setStatus(0);
+        todo.setStatus(false);
         int result = todoService.insertTodo(todo);
         if (result == 1) {
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -53,6 +58,7 @@ public class TodoController {
     }
 
     // todo 수정
+    @Operation(summary = "Todo 수정", description = "내용 수정")
     @PutMapping
     public ResponseEntity<?> updateTodo(@RequestBody TodoDto todoDto){
         log.info("Todo 수정");
@@ -64,11 +70,21 @@ public class TodoController {
     }
 
     // todo 삭제
-    public ResponseEntity<?> deleteTodo() {
-        return null;
+    @Operation(summary = "Todo 삭제", description = "Todo 항목 삭제")
+    @DeleteMapping
+    public ResponseEntity<?> deleteTodo(@RequestParam long todoSeq) {
+        log.info("Todo 삭제");
+        todoService.deleteTodo(todoSeq);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // todo 체크
+    @Operation(summary = "Todo 완료/미완료 체크", description = "Todo의 상태를 변경합니다")
+    @GetMapping("/{todoSeq}")
+    public ResponseEntity<?> toggleTodo (@PathVariable long todoSeq) {
+        todoService.toggleTodo(todoSeq);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }

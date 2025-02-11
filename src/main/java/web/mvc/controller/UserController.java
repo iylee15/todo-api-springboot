@@ -1,5 +1,7 @@
 package web.mvc.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +19,14 @@ import web.mvc.service.UserService;
 @RequiredArgsConstructor
 @Validated
 @Slf4j
+@Tag(name = "UserController API", description = "Swagger 테스트용 API")
 public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
 
     // 회원가입
+    @Operation(summary = "회원가입", description = "")
     @PostMapping("/user")
     public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         log.info("회원가입 진행합니다.");
@@ -37,6 +41,7 @@ public class UserController {
     }
 
     // 로그인
+    @Operation(summary = "로그인", description = "")
     @GetMapping("/login")
     public ResponseEntity<?> login(@RequestParam String userId, @RequestParam String password) {
         log.info("로그인 진행합니다.");

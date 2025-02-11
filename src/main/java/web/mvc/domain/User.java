@@ -30,7 +30,7 @@ public class User {
     private String nickname;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Todo>todoList;
+    private List<Todo> todoList;
 
     public User(long userSeq) {
         this.userSeq = userSeq;

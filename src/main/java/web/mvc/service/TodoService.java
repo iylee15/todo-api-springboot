@@ -20,4 +20,14 @@ public interface TodoService {
      * Todo 수정
      */
     public Todo updateTodo(Todo todo);
+
+    /**
+     * Todo 삭제
+     */
+    public int deleteTodo (long todoSeq);
+
+    /**
+     * Todo 토글
+     */
+    public void toggleTodo (long todoSeq);
 }

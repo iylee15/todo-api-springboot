@@ -20,17 +20,17 @@ public class Todo {
     @Column(name = "todo_seq")
     private long todoSeq;
 
-    @Column(name = "title", nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @Column(length = 500)
     private String description;
 
     @Column(name = "priority")
     private int priority;
 
     @Column(name = "status", nullable = false)
-    private int status;
+    private boolean status;
 
     @Column(name = "date")
     private LocalDate date;
