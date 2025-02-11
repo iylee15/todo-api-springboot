@@ -48,7 +48,7 @@ public class TodoIntegrationTests {
     }
 
     @Test
-    @DisplayName("Todo 리스트 조회 통합 테스트")
+    @DisplayName("Todo 리스트 조회 테스트")
     void getTodoListById() throws Exception {
         // given
         long userSeq = 1L;

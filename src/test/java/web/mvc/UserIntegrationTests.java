@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class UserIntegrationTests {
     private TodoRepository todoRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
+    @MockitoBean
     private UserService userService;
     @Autowired
     private ModelMapper modelMapper;
@@ -60,19 +61,20 @@ public class UserIntegrationTests {
     }
 
     @Test
-    @DisplayName("User SignUp 테스트")
+    @DisplayName("회원가입 성공 테스트")
     void signUpTest() throws Exception {
         // given
-        SignUpRequest signUpRequest = SignUpRequest.builder().userId("user1").password("1234").nickname("테스트유저").build();
-                //("user1", "password", "nickname");
+        SignUpRequest signUpRequest = SignUpRequest.builder()
+                .userId("user1")
+                .password("1234")
+                .nickname("테스트유저")
+                .build();
         String successMessage = "테스트유저";
 
-        User testUser = modelMapper.map(signUpRequest, User.class);
-
-//        when(userService.signUp(any(User.class))).thenAnswer(invocation -> {
-//            User argumentUser = invocation.getArgument(0); // signUp에 전달된 User 객체 가져오기
-//            return argumentUser.getNickname(); // 닉네임 반환
-//        });
+        when(userService.signUp(any(User.class))).thenAnswer(invocation -> {
+            User argumentUser = invocation.getArgument(0); // signUp에 전달된 User 객체 가져오기
+            return argumentUser.getNickname(); // 닉네임 반환
+        });
 
         // when
         ResultActions result = mockMvc.perform(post("/user")
@@ -82,11 +84,40 @@ public class UserIntegrationTests {
         // then
         result.andExpect(status().isOk())
                 .andExpect(content().string("테스트유저님 가입을 환영합니다!")).andDo(print());
+
+        // signUp 호출 검증
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-//        verify(userService).signUp(userCaptor.capture());
+        verify(userService, times(1)).signUp(userCaptor.capture());
 //
-//        User capturedUser = userCaptor.getValue();
-//        assertNotNull(capturedUser);
-//        assertEquals("user1", capturedUser.getUserId());
+        User capturedUser = userCaptor.getValue();
+        assertNotNull(capturedUser);
+        assertEquals("user1", capturedUser.getUserId());
+        assertEquals("테스트유저", capturedUser.getNickname());
+    }
+
+    @Test
+    @DisplayName("회원가입 실패 테스트")
+    void signUpFailTest() throws Exception {
+        // given
+        SignUpRequest signUpRequest = SignUpRequest.builder()
+                .userId("user1")
+                .password("5678")
+                .nickname("유저2")
+                .build();
+
+        when(userService.signUp(any(User.class))).thenReturn(null);
+
+        // when
+        ResultActions result = mockMvc.perform(post("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(signUpRequest)));
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(content().string(""))
+                .andDo(print());
+
+        // userService.signUp()이 한 번 호출되었는지 검증
+        verify(userService, times(1)).signUp(any(User.class));
     }
 }
