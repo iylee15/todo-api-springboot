@@ -43,4 +43,11 @@ public class Todo {
     public String toString() {
         return "Todo 정보 : " + this.getTodoSeq() + " | " + this.getTitle();
     }
+
+    public Todo (String title, String description, boolean status, User user) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.user = user;
+    }
 }
