@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import web.mvc.controller.UserController;
 import web.mvc.domain.User;
@@ -21,15 +23,17 @@ import web.mvc.repository.TodoRepository;
 import web.mvc.repository.UserRepository;
 import web.mvc.service.UserService;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-@WebMvcTest(UserController.class)
+//@WebMvcTest(UserController.class)
 public class UserIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
@@ -37,11 +41,11 @@ public class UserIntegrationTests {
     private TodoRepository todoRepository;
     @Autowired
     private UserRepository userRepository;
-    @Mock
+    @Autowired
     private UserService userService;
-    @Mock
+    @Autowired
     private ModelMapper modelMapper;
-    @InjectMocks
+    @Autowired
     private UserController userController;
 
     @BeforeEach
@@ -57,22 +61,32 @@ public class UserIntegrationTests {
 
     @Test
     @DisplayName("User SignUp 테스트")
-    void getTodoListById() throws Exception {
+    void signUpTest() throws Exception {
         // given
-        SignUpRequest signUpRequest = SignUpRequest.builder().userId("user1").password("1234").nickname("유저1").build();
+        SignUpRequest signUpRequest = SignUpRequest.builder().userId("user1").password("1234").nickname("테스트유저").build();
                 //("user1", "password", "nickname");
         String successMessage = "테스트유저";
 
-        when(userService.signUp(any(User.class))).thenReturn(successMessage);
+        User testUser = modelMapper.map(signUpRequest, User.class);
+
+//        when(userService.signUp(any(User.class))).thenAnswer(invocation -> {
+//            User argumentUser = invocation.getArgument(0); // signUp에 전달된 User 객체 가져오기
+//            return argumentUser.getNickname(); // 닉네임 반환
+//        });
 
         // when
-        mockMvc.perform(post("/user")
+        ResultActions result = mockMvc.perform(post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(signUpRequest)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("테스트유저님 가입을 환영합니다!"));
+                        .content(new ObjectMapper().writeValueAsString(signUpRequest)));
 
         // then
-        verify(userService).signUp(any(User.class));
+        result.andExpect(status().isOk())
+                .andExpect(content().string("테스트유저님 가입을 환영합니다!")).andDo(print());
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+//        verify(userService).signUp(userCaptor.capture());
+//
+//        User capturedUser = userCaptor.getValue();
+//        assertNotNull(capturedUser);
+//        assertEquals("user1", capturedUser.getUserId());
     }
 }
