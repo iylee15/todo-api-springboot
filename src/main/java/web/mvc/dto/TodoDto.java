@@ -20,7 +20,7 @@ public class TodoDto {
     @NotNull(message = "내용을 입력해주세요")
     private String title;
     private String description;
-    private int priority;
+    private Integer priority;
     private int status;
     private LocalDate date;
     //private long userSeq;

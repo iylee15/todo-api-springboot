@@ -2,9 +2,13 @@ package web.mvc.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "todo")
@@ -26,14 +30,20 @@ public class Todo {
     @Column(length = 500)
     private String description;
 
-    @Column(name = "priority")
-    private int priority;
+    @Column(name = "priority", nullable = true)
+    private Integer priority;
 
     @Column(name = "status", nullable = false)
+    @ColumnDefault("0")
     private boolean status;
 
     @Column(name = "date")
     private LocalDate date;
+
+    @PrePersist
+    protected void onCreate() {
+        this.date = LocalDate.now();
+    }
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_seq", nullable = false)

@@ -83,6 +83,7 @@ public class TodoController {
     @Operation(summary = "Todo 완료/미완료 체크", description = "Todo의 상태를 변경합니다")
     @GetMapping("/{todoSeq}")
     public ResponseEntity<?> toggleTodo (@PathVariable long todoSeq) {
+        log.info(("체크상태 변경"));
         todoService.toggleTodo(todoSeq);
         return new ResponseEntity<>(HttpStatus.OK);
     }
