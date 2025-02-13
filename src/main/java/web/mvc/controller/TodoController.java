@@ -35,9 +35,10 @@ public class TodoController {
     // todo 조회
     @Operation(summary = "Todo List 조회", description = "사용자가 등록한 Todo List의 조회")
     @GetMapping
-    public ResponseEntity<?> getTodoListById(long userSeq){
+    public ResponseEntity<?> getTodoListById(){
         log.info("Todo List 조회");
-        List<Todo> todoList = todoService.findTodoById(userSeq);
+//        List<Todo> todoList = todoService.findTodoById(userSeq);
+        List<Todo> todoList = todoService.findTodoList();
         List<TodoDto> todoDtoList = todoList.stream().map(data -> modelMapper.map(data, TodoDto.class)).toList();
         return new ResponseEntity<>(todoDtoList, HttpStatus.OK);
     }
@@ -63,7 +64,7 @@ public class TodoController {
     public ResponseEntity<?> updateTodo(@RequestBody TodoDto todoDto){
         log.info("Todo 수정");
         Todo todo = modelMapper.map(todoDto, Todo.class);
-        todo.setUser(new User(todoDto.getUserSeq()));
+        //todo.setUser(new User(todoDto.getUserSeq()));
         log.info("Todo 수정정보 : {}", todo.toString());
         Todo result = todoService.updateTodo(todo);
         return new ResponseEntity<>(result, HttpStatus.OK);

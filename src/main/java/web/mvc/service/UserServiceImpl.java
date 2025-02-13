@@ -11,34 +11,34 @@ import web.mvc.domain.User;
 import web.mvc.dto.SignUpRequest;
 import web.mvc.repository.UserRepository;
 
-@Service
-@Transactional
-@DynamicUpdate
-public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    //    private PasswordEn
-
-    @Override
-    public String signUp(User user) {
-        // 중복체크
-        if(userRepository.existsById(user.getUserId()) > 0) {
-            return "아이디 중복입니다";
-        } else if (userRepository.existsByNickname(user.getNickname()) > 0) {
-            return "닉네임 중복입니다";
-        }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        User result = userRepository.save(user);
-        return result.getNickname();
-    }
-
-    @Override
-    public String login(String userId, String password) {
-        bCryptPasswordEncoder.matches(password, userRepository.findByUserId(userId).getPassword());
-        return "로그인 성공";
-    }
-}
+//@Service
+//@Transactional
+//@DynamicUpdate
+//public class UserServiceImpl implements UserService {
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//
+//    //    private PasswordEn
+//
+//    @Override
+//    public String signUp(User user) {
+//        // 중복체크
+//        if(userRepository.existsById(user.getUserId()) > 0) {
+//            return "아이디 중복입니다";
+//        } else if (userRepository.existsByNickname(user.getNickname()) > 0) {
+//            return "닉네임 중복입니다";
+//        }
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        User result = userRepository.save(user);
+//        return result.getNickname();
+//    }
+//
+//    @Override
+//    public String login(String userId, String password) {
+//        bCryptPasswordEncoder.matches(password, userRepository.findByUserId(userId).getPassword());
+//        return "로그인 성공";
+//    }
+//}

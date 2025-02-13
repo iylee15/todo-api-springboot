@@ -18,9 +18,15 @@ public class TodoServiceImpl implements TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
+//    @Override
+//    public List<Todo> findTodoById(long userSeq) {
+//        List<Todo> todoList = todoRepository.findTodoByUser(userSeq);
+//        return todoList;
+//    }
+
     @Override
-    public List<Todo> findTodoById(long userSeq) {
-        List<Todo> todoList = todoRepository.findTodoByUser(userSeq);
+    public List<Todo> findTodoList() {
+        List<Todo> todoList = todoRepository.findTodoList();
         return todoList;
     }
 
@@ -41,7 +47,6 @@ public class TodoServiceImpl implements TodoService {
         dbTodo.setDescription(todo.getDescription());
         dbTodo.setPriority(todo.getPriority());
         dbTodo.setDate(todo.getDate());
-        dbTodo.setUser(todo.getUser());
         return dbTodo;
     }
 

@@ -16,5 +16,5 @@ public class TodoRequestDto {
     private int priority;
     private int status;
     private LocalDate date;
-    private long userSeq;
+    //private long userSeq;
 }

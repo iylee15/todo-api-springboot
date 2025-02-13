@@ -42,8 +42,8 @@ public class TodoIntegrationTests {
         // 테스트용 데이터
 //        User user1 = new User("test1", "1234", "testUser");
 //        userRepository.save(user1);
-        Todo todo1 = new Todo("Todo1", "할일1", false, new User(1L));
-        Todo todo2 = new Todo("Todo2", "할일2", false, new User(1L));
+        Todo todo1 = new Todo("Todo1", "할일1", false);
+        Todo todo2 = new Todo("Todo2", "할일2", false);
         todoRepository.saveAll(Arrays.asList(todo1, todo2));
     }
 
@@ -56,7 +56,7 @@ public class TodoIntegrationTests {
         // when
         ResultActions result = mockMvc.perform(
                 get("/todo")
-                        .param("userSeq", String.valueOf(userSeq))
+//                        .param("userSeq", String.valueOf(userSeq))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 

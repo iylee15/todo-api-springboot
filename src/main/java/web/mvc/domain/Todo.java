@@ -35,19 +35,19 @@ public class Todo {
     @Column(name = "date")
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_seq", nullable = false)
-    private User user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_seq", nullable = false)
+//    private User user;
 
     @Override
     public String toString() {
         return "Todo 정보 : " + this.getTodoSeq() + " | " + this.getTitle();
     }
 
-    public Todo (String title, String description, boolean status, User user) {
+    public Todo (String title, String description, boolean status) {
         this.title = title;
         this.description = description;
         this.status = status;
-        this.user = user;
+//        this.user = user;
     }
 }

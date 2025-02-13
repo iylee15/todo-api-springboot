@@ -8,7 +8,9 @@ public interface TodoService {
     /**
      * Todo 조회
      */
-    public List<Todo> findTodoById(long userSeq);
+//    public List<Todo> findTodoById(long userSeq);
+
+    public List<Todo> findTodoList();
 
     /**
      * Todo 등록

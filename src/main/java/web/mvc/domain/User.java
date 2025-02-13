@@ -6,14 +6,14 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
-@Entity
-@Table(name = "user")
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@DynamicUpdate
+//@Entity
+//@Table(name = "user")
+//@Getter
+//@Setter
+//@Builder
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@DynamicUpdate
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
