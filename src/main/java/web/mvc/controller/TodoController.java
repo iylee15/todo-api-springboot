@@ -9,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.mvc.domain.Todo;
-import web.mvc.domain.User;
 import web.mvc.dto.TodoDto;
-import web.mvc.dto.TodoRequestDto;
 import web.mvc.service.TodoService;
 
 import java.util.List;
@@ -26,18 +24,11 @@ public class TodoController {
     private final TodoService todoService;
     private final ModelMapper modelMapper;
 
-    // test
-//    @GetMapping("/hello")
-//    public String test() {
-//        return "Hello World";
-//    }
-
     // todo 조회
     @Operation(summary = "Todo List 조회", description = "사용자가 등록한 Todo List의 조회")
     @GetMapping
     public ResponseEntity<?> getTodoListById(){
         log.info("Todo List 조회");
-//        List<Todo> todoList = todoService.findTodoById(userSeq);
         List<Todo> todoList = todoService.findTodoList();
         List<TodoDto> todoDtoList = todoList.stream().map(data -> modelMapper.map(data, TodoDto.class)).toList();
         return new ResponseEntity<>(todoDtoList, HttpStatus.OK);
@@ -88,7 +79,4 @@ public class TodoController {
         todoService.toggleTodo(todoSeq);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    // todo 우선순위
-
 }

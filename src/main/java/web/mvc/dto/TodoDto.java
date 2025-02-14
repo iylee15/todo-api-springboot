@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class TodoDto {
     private long todoSeq;
 
-    @NotNull(message = "내용을 입력해주세요")
+    @NotNull(message = "제목을 입력해주세요")
     private String title;
     private String description;
     private Integer priority;

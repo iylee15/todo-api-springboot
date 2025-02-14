@@ -45,10 +45,6 @@ public class Todo {
         this.date = LocalDate.now();
     }
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_seq", nullable = false)
-//    private User user;
-
     @Override
     public String toString() {
         return "Todo 정보 : " + this.getTodoSeq() + " | " + this.getTitle();
@@ -58,6 +54,5 @@ public class Todo {
         this.title = title;
         this.description = description;
         this.status = status;
-//        this.user = user;
     }
 }
