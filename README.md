@@ -7,7 +7,7 @@
 ## 소스 빌드 및 실행 방법 💻
 - todo-api-springboot 코드와 Todo-FE의 코드를 함께 내려받습니다  
 (FE : https://github.com/iylee15/Todo-FE)
-- 받은 코드 내부의 *TodoDB.sql* 파일을 MySQL workbench의 Data Import/Restore 메뉴를 통해 실행하여 앱의 초기 데이터를 저장합니다.
+- 받은 코드 내부의 *TodoDB.sql* 파일을 MySQL workbench의 Data Import/Restore 메뉴를 통해 실행하여 앱의 초기 데이터를 저장합니다.  
 ![Image](https://github.com/user-attachments/assets/f9ea3200-4e8d-457c-8de0-1a52ea53ab0c)
 - 프로젝트 내 resources 폴더에 application.properties를 생성하고 datasource 값을 설정합니다.
 - 포트값도 지정해 줍니다.
