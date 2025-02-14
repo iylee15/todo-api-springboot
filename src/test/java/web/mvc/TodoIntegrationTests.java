@@ -49,7 +49,6 @@ public class TodoIntegrationTests {
         // when
         ResultActions result = mockMvc.perform(
                 get("/todo")
-//                        .param("userSeq", String.valueOf(userSeq))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 

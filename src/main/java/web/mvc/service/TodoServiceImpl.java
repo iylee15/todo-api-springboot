@@ -4,10 +4,13 @@ import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import web.mvc.domain.Todo;
 import web.mvc.repository.TodoRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -54,5 +57,37 @@ public class TodoServiceImpl implements TodoService {
     public void toggleTodo(long todoSeq) {
         Todo todo = todoRepository.findById(todoSeq).orElseThrow(() -> new RuntimeException("등록된 항목이 없습니다."));
         todo.setStatus(!todo.isStatus());
+    }
+
+    @Override
+    public Todo insertRecurringTodo(Todo todo) {
+        if (todo.isRecurring()) {
+            todo.setLastCreatedAt(LocalDate.now());
+        }
+        return todoRepository.save(todo);
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void createRecurringTodos() {
+        LocalDate today = LocalDate.now();
+
+        List<Todo> recurringTodos = todoRepository.findByIsRecurringTrue();
+
+        for (Todo originalTodo : recurringTodos) {
+            LocalDate lastCreated = originalTodo.getLastCreatedAt();
+
+            if (lastCreated.isBefore(today)) {
+                Todo newTodo = new Todo();
+                newTodo.setTitle(originalTodo.getTitle());
+                newTodo.setDescription(originalTodo.getDescription());
+                newTodo.setStatus(false);
+                newTodo.setRecurring(false);
+
+                todoRepository.save(newTodo);
+
+                originalTodo.setLastCreatedAt(LocalDate.now());
+                todoRepository.save(originalTodo);
+            }
+        }
     }
 }

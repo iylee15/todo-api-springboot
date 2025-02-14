@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,5 +23,7 @@ public class TodoDto {
     private String description;
     private Integer priority;
     private int status;
+    private boolean isRecurring;
     private LocalDate date;
+    private LocalDateTime lastCreatedAt;
 }

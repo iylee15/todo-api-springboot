@@ -12,6 +12,8 @@ import web.mvc.domain.Todo;
 import web.mvc.dto.TodoDto;
 import web.mvc.service.TodoService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,12 +37,15 @@ public class TodoController {
     }
 
     // todo 등록
-    @Operation(summary = "Todo 등록", description = "사용자의 할 일(Todo) 등록")
+    @Operation(summary = "Todo 등록", description = "사용자의 할 일(Todo) 등록 / Daily 등록 가능")
     @PostMapping
     public ResponseEntity<?> insertTodo (@RequestBody TodoDto todoDto){
         log.info("Todo 등록");
         Todo todo = modelMapper.map(todoDto, Todo.class);
         todo.setStatus(false);
+        if (todo.isRecurring()) {
+            todo.setLastCreatedAt(LocalDate.now());
+        }
         Todo result = todoService.insertTodo(todo);
         TodoDto resultDto = modelMapper.map(result, TodoDto.class);
         if (result != null) {
@@ -78,5 +83,12 @@ public class TodoController {
         log.info(("체크상태 변경"));
         todoService.toggleTodo(todoSeq);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // todo 반복설정
+    public ResponseEntity<?> insertRecurringTodo (TodoDto todoDto) {
+        log.info("정기적인 Todo 등록");
+
+        return null;
     }
 }

@@ -11,4 +11,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     @Query("select t from Todo t order by t.priority asc nulls last, t.date desc")
     List<Todo> findTodoList();
 
+    List<Todo> findByIsRecurringTrue();
+
 }
