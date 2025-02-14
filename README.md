@@ -27,6 +27,7 @@
 ![Image](https://github.com/user-attachments/assets/2b2fd522-a038-428f-b069-4102fccdce8a)
 
 - 이어서 Todo-FE 코드를 실행합니다.
+- API 명세는 앱 실행 후 http://localhost:9000/swagger-ui/index.html 로 접속하여 확인할 수 있습니다.
 
 
 ## 주력으로 사용한 라이브러리 설명 및 사용 이유 📚
