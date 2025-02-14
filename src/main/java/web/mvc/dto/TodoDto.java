@@ -23,5 +23,4 @@ public class TodoDto {
     private Integer priority;
     private int status;
     private LocalDate date;
-    //private long userSeq;
 }

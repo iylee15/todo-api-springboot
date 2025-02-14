@@ -33,11 +33,8 @@ public class TodoIntegrationTests {
     void setUp() {
         // 테스트 전 데이터 초기화
         todoRepository.deleteAll();
-//        userRepository.deleteAll();
 
         // 테스트용 데이터
-//        User user1 = new User("test1", "1234", "testUser");
-//        userRepository.save(user1);
         Todo todo1 = new Todo("Todo1", "할일1", false);
         Todo todo2 = new Todo("Todo2", "할일2", false);
         todoRepository.saveAll(Arrays.asList(todo1, todo2));

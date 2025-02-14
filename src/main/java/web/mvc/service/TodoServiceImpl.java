@@ -18,12 +18,6 @@ public class TodoServiceImpl implements TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-//    @Override
-//    public List<Todo> findTodoById(long userSeq) {
-//        List<Todo> todoList = todoRepository.findTodoByUser(userSeq);
-//        return todoList;
-//    }
-
     @Override
     public List<Todo> findTodoList() {
         List<Todo> todoList = todoRepository.findTodoList();
