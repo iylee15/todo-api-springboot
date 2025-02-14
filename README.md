@@ -22,8 +22,8 @@
   
 - intelliJ를 통해 Gradle 빌드 실행
     - View > Tool Windows > Gradle > Tasks > build > build 클릭을 통해 빌드
-    - Tasks > application > bootRun을 통해 앱 실행
-    - ![Image](https://github.com/user-attachments/assets/2b2fd522-a038-428f-b069-4102fccdce8a)
+    - Tasks > application > bootRun을 통해 앱 실행  
+![Image](https://github.com/user-attachments/assets/2b2fd522-a038-428f-b069-4102fccdce8a)
 
 - 이어서 Todo-FE 코드를 실행합니다.
 
