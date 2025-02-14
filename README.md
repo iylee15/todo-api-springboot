@@ -5,21 +5,27 @@
 - 완료된 할 일은 체크하여 완료로 표시할 수 있으며 미완료 항목만 목록에 보이게 할 수 있습니다.
 
 ## 소스 빌드 및 실행 방법 💻
-- 이 저장소의 코드와 Todo-FE의 코드를 함께 내려받습니다
+- todo-api-springboot 코드와 Todo-FE의 코드를 함께 내려받습니다  
 (FE : https://github.com/iylee15/Todo-FE)
-- MySQL workbench를 이용해 연결할 DB 스키마를 생성하고 application.properties의 datasource 값을 설정합니다.
+- 받은 코드 내부의 *TodoDB.sql* 파일을 MySQL workbench의 Data Import/Restore 메뉴를 통해 실행하여 앱의 초기 데이터를 저장합니다.
+![Image](https://github.com/user-attachments/assets/f9ea3200-4e8d-457c-8de0-1a52ea53ab0c)
+- 프로젝트 내 resources 폴더에 application.properties를 생성하고 datasource 값을 설정합니다.
 - 포트값도 지정해 줍니다.
 
         #port
         server.port=9000
   
-        spring.datasource.url=jdbc:mysql://localhost:3306/[스키마명]
+        spring.datasource.url=jdbc:mysql://localhost:3306/[스키마명(예시:todo)]
         spring.datasource.username=[아이디]
         spring.datasource.password=[비밀번호]
         spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
   
-- intellJ를 이용해 todo-api-springboot의 TodoApplication를 실행합니다.
-- 이어서 Todo-FE 코드의 빌드 및 실행을 진행합니다.
+- intelliJ를 통해 Gradle 빌드 실행
+    - View > Tool Windows > Gradle > Tasks > build > build 클릭을 통해 빌드
+    - Tasks > application > bootRun을 통해 앱 실행
+    - ![Image](https://github.com/user-attachments/assets/2b2fd522-a038-428f-b069-4102fccdce8a)
+
+- 이어서 Todo-FE 코드를 실행합니다.
 
 
 ## 주력으로 사용한 라이브러리 설명 및 사용 이유 📚
