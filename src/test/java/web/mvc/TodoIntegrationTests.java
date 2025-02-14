@@ -11,14 +11,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import web.mvc.domain.Todo;
-import web.mvc.domain.User;
 import web.mvc.repository.TodoRepository;
-import web.mvc.repository.UserRepository;
 
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -30,8 +28,6 @@ public class TodoIntegrationTests {
     private MockMvc mockMvc;
     @Autowired
     private TodoRepository todoRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {

@@ -31,12 +31,12 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public int insertTodo(Todo todo) {
+    public Todo insertTodo(Todo todo) {
         try {
             Todo result = todoRepository.save(todo);
-            return 1;
+            return result;
         } catch (Exception e) {
-            return 0;
+            return null;
         }
     }
 

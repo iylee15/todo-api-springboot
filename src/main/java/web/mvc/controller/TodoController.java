@@ -50,9 +50,10 @@ public class TodoController {
         log.info("Todo 등록");
         Todo todo = modelMapper.map(todoDto, Todo.class);
         todo.setStatus(false);
-        int result = todoService.insertTodo(todo);
-        if (result == 1) {
-            return new ResponseEntity<>(result, HttpStatus.OK);
+        Todo result = todoService.insertTodo(todo);
+        TodoDto resultDto = modelMapper.map(result, TodoDto.class);
+        if (result != null) {
+            return new ResponseEntity<>(resultDto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -72,8 +73,8 @@ public class TodoController {
 
     // todo 삭제
     @Operation(summary = "Todo 삭제", description = "Todo 항목 삭제")
-    @DeleteMapping
-    public ResponseEntity<?> deleteTodo(@RequestParam long todoSeq) {
+    @DeleteMapping("/{todoSeq}")
+    public ResponseEntity<?> deleteTodo(@PathVariable long todoSeq) {
         log.info("Todo 삭제");
         todoService.deleteTodo(todoSeq);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -88,5 +89,6 @@ public class TodoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // todo 우선순위
 
 }

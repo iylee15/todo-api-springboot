@@ -15,7 +15,7 @@ public interface TodoService {
     /**
      * Todo 등록
      */
-    public int insertTodo(Todo todo);
+    public Todo insertTodo(Todo todo);
 
 
     /**
