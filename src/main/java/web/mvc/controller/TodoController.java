@@ -35,7 +35,7 @@ public class TodoController {
     }
 
     // todo 등록
-    @Operation(summary = "Todo 등록", description = "사용자의 할 일 등록")
+    @Operation(summary = "Todo 등록", description = "사용자의 할 일(Todo) 등록")
     @PostMapping
     public ResponseEntity<?> insertTodo (@RequestBody TodoDto todoDto){
         log.info("Todo 등록");
@@ -51,7 +51,7 @@ public class TodoController {
     }
 
     // todo 수정
-    @Operation(summary = "Todo 수정", description = "내용 수정")
+    @Operation(summary = "Todo 수정", description = "Todo 내용 수정")
     @PutMapping
     public ResponseEntity<?> updateTodo(@RequestBody TodoDto todoDto){
         log.info("Todo 수정");
@@ -72,7 +72,7 @@ public class TodoController {
     }
 
     // todo 체크
-    @Operation(summary = "Todo 완료/미완료 체크", description = "Todo의 상태를 변경합니다")
+    @Operation(summary = "Todo 완료/미완료 체크", description = "Todo의 완료 상태를 변경합니다")
     @PatchMapping("/{todoSeq}")
     public ResponseEntity<?> toggleTodo (@PathVariable long todoSeq) {
         log.info(("체크상태 변경"));
