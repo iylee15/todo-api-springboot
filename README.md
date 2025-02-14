@@ -23,8 +23,8 @@
   
 - intelliJ를 통해 Gradle 빌드 실행
     - View > Tool Windows > Gradle > Tasks > build > build 클릭을 통해 빌드
-    - Tasks > application > bootRun을 통해 앱 실행  
-![Image](https://github.com/user-attachments/assets/2b2fd522-a038-428f-b069-4102fccdce8a)
+    - TodoApplication을 실행  
+![intelliJ](https://github.com/user-attachments/assets/dbff7a6e-f9ae-4747-9ec2-f070f56219e1)
 
 - 이어서 Todo-FE 코드를 실행합니다.
 - API 명세는 앱 실행 후 http://localhost:9000/swagger-ui/index.html 로 접속하여 확인할 수 있습니다.
