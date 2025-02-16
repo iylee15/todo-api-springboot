@@ -32,4 +32,9 @@ public interface TodoService {
      * Todo 토글
      */
     public void toggleTodo (long todoSeq);
+
+    /**
+     * 정기 등록
+     */
+    public void createRecurringTodos();
 }

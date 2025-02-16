@@ -35,10 +35,17 @@ public class Todo {
 
     @Column(name = "status", nullable = false)
     @ColumnDefault("0")
-    private boolean status;
+    private boolean isStatus;
+
+    @Column(name = "recurring", nullable = false)
+    @ColumnDefault("0")
+    private boolean isRecurring;
 
     @Column(name = "date")
     private LocalDate date;
+
+    @Column(name = "last_created")
+    private LocalDate lastCreatedAt;
 
     @PrePersist
     protected void onCreate() {
@@ -53,6 +60,6 @@ public class Todo {
     public Todo (String title, String description, boolean status) {
         this.title = title;
         this.description = description;
-        this.status = status;
+        this.isStatus = status;
     }
 }
