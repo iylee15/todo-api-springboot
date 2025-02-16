@@ -36,5 +36,5 @@ public interface TodoService {
     /**
      * 정기 등록
      */
-    public Todo insertRecurringTodo(Todo todo);
+    public void createRecurringTodos();
 }

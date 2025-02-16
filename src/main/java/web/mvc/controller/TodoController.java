@@ -2,6 +2,7 @@ package web.mvc.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -39,13 +40,10 @@ public class TodoController {
     // todo 등록
     @Operation(summary = "Todo 등록", description = "사용자의 할 일(Todo) 등록 / Daily 등록 가능")
     @PostMapping
-    public ResponseEntity<?> insertTodo (@RequestBody TodoDto todoDto){
+    public ResponseEntity<?> insertTodo (@Valid @RequestBody TodoDto todoDto){
         log.info("Todo 등록");
         Todo todo = modelMapper.map(todoDto, Todo.class);
         todo.setStatus(false);
-        if (todo.isRecurring()) {
-            todo.setLastCreatedAt(LocalDate.now());
-        }
         Todo result = todoService.insertTodo(todo);
         TodoDto resultDto = modelMapper.map(result, TodoDto.class);
         if (result != null) {

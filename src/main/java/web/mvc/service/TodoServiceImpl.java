@@ -1,6 +1,7 @@
 package web.mvc.service;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,12 @@ import web.mvc.domain.Todo;
 import web.mvc.repository.TodoRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @Transactional
 @DynamicUpdate
+@Slf4j
 public class TodoServiceImpl implements TodoService {
 
     @Autowired
@@ -29,6 +30,10 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo insertTodo(Todo todo) {
+        log.info("insertTodo 서비스 시작");
+        if (todo.isRecurring()) {
+            todo.setLastCreatedAt(LocalDate.now());
+        }
         try {
             Todo result = todoRepository.save(todo);
             return result;
@@ -60,13 +65,6 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Todo insertRecurringTodo(Todo todo) {
-        if (todo.isRecurring()) {
-            todo.setLastCreatedAt(LocalDate.now());
-        }
-        return todoRepository.save(todo);
-    }
-
     @Scheduled(cron = "0 0 0 * * *")
     public void createRecurringTodos() {
         LocalDate today = LocalDate.now();
