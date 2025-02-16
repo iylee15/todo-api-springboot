@@ -67,7 +67,7 @@ public class TodoIntegrationTests {
                         .content(objectMapper.writeValueAsString(sampleTodoDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("테스트 할일"))
-                .andExpect(jsonPath("$.status").value(0))
+                .andExpect(jsonPath("$.status").value(false))
                 .andReturn();
     }
 
@@ -91,9 +91,9 @@ public class TodoIntegrationTests {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].title").value("Todo1"))
-                .andExpect(jsonPath("$[0].status").value(0))
+                .andExpect(jsonPath("$[0].status").value(false))
                 .andExpect(jsonPath("$[1].title").value("Todo2"))
-                .andExpect(jsonPath("$[1].status").value(0))
+                .andExpect(jsonPath("$[1].status").value(false))
                 .andDo(print());  // 테스트 결과를 콘솔에 출력
     }
 

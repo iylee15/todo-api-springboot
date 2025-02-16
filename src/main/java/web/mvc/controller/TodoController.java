@@ -37,7 +37,7 @@ public class TodoController {
         return new ResponseEntity<>(todoDtoList, HttpStatus.OK);
     }
 
-    // todo 등록
+    // todo 등록 : 반복설정 가능
     @Operation(summary = "Todo 등록", description = "사용자의 할 일(Todo) 등록 / Daily 등록 가능")
     @PostMapping
     public ResponseEntity<?> insertTodo (@Valid @RequestBody TodoDto todoDto){
@@ -81,12 +81,5 @@ public class TodoController {
         log.info(("체크상태 변경"));
         todoService.toggleTodo(todoSeq);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    // todo 반복설정
-    public ResponseEntity<?> insertRecurringTodo (TodoDto todoDto) {
-        log.info("정기적인 Todo 등록");
-
-        return null;
     }
 }

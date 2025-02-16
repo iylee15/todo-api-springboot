@@ -23,8 +23,8 @@ public class TodoDto {
     private String title;
     private String description;
     private Integer priority;
-    private int status;
+    private boolean isStatus;
     private boolean isRecurring;
     private LocalDate date;
-    private LocalDateTime lastCreatedAt;
+    private LocalDate lastCreatedAt;
 }
